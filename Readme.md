@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Дмитрий Виноградов](https://up.htmlacademy.ru/nodejs-api/5/user/839417).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Сушко](https://htmlacademy.ru/profile/sashasushko).
 
 ---
 
