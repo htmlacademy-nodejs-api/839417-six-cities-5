@@ -1,6 +1,6 @@
 import { Command } from './command.interface.js';
 
-export class HeplCommand implements Command {
+export class HelpCommand implements Command {
   public getName(): string {
     return '--help';
   }
