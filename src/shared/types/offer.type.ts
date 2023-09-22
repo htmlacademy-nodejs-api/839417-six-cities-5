@@ -10,10 +10,10 @@ export enum OfferCity {
 }
 
 export enum OfferType {
-  Apartment = 'Apartment',
-  House = 'House',
-  Room = 'Room',
-  Hotel = 'Hotel'
+  apartment = 'apartment',
+  house = 'house',
+  room = 'room',
+  hotel = 'hotel'
 }
 
 export enum OfferOption {

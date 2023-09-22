@@ -23,7 +23,7 @@ export class TSVFileReader implements FileReader {
       .filter((row) => row.trim().length > 0)
       .map((line) => line.split('\t'))
       .map(([title, description, createdDate, city, preview, pictures, isPremium, isFavorite, rating, type,
-        roomsNumber, guestsNumber, price, options, name, email, avatarPath, password, rank, commentsNumber, location]) => ({
+        roomsNumber, guestsNumber, price, options, name, email, avatarPath, password, rank, location]) => ({
         title,
         description,
         postDate: new Date(createdDate),
@@ -33,7 +33,7 @@ export class TSVFileReader implements FileReader {
         isPremium: isPremium === 'true',
         isFavorite: isFavorite === 'true',
         rating: Number.parseFloat(rating),
-        type: OfferType[type as 'Apartment' | 'Room' | 'House' | 'Room'],
+        type: OfferType[type as 'apartment' | 'room' | 'house' | 'room'],
         roomsNumber: Number.parseInt(roomsNumber, 10),
         guestsNumber: Number.parseInt(guestsNumber, 10),
         price: Number.parseInt(price, 10),
@@ -44,9 +44,9 @@ export class TSVFileReader implements FileReader {
           email,
           avatarPath,
           password,
-          rank: UserRank[rank as 'Regular' | 'Pro']
+          rank: UserRank[rank as 'regular' | 'pro']
         },
-        commentsNumber: Number.parseInt(commentsNumber, 10),
+        commentsNumber: 0,
         location: {
           latitude: Number.parseFloat(location.split(';')[0]),
           longitude: Number.parseFloat(location.split(';')[1])
