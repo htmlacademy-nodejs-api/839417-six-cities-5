@@ -1,4 +1,4 @@
-enum UserRank {
+export enum UserRank {
   Regular = 'Regular',
   Pro = 'Pro'
 }
@@ -6,7 +6,7 @@ enum UserRank {
 export type User = {
   name: string;
   email: string;
-  avatar?: string;
+  avatarPath?: string;
   password: string;
   rank: UserRank;
 }

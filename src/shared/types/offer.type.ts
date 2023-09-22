@@ -1,6 +1,6 @@
 import { User } from './user.type.js';
 
-enum OfferCity {
+export enum OfferCity {
   Paris = 'Paris',
   Cologne = 'Cologne',
   Brussels = 'Brussels',
@@ -9,14 +9,14 @@ enum OfferCity {
   Dusseldorf = 'Dusseldorf'
 }
 
-enum OfferHousing {
+export enum OfferType {
   Apartment = 'Apartment',
   House = 'House',
   Room = 'Room',
   Hotel = 'Hotel'
 }
 
-enum OfferOption {
+export enum OfferOption {
   Breakfast = 'Breakfast',
   AirConditioning = 'Air conditioning',
   LaptopFriendlyWorkspace = 'Laptop friendly workspace',
@@ -32,7 +32,7 @@ type Location = {
 }
 
 export type Offer = {
-  name: string;
+  title: string;
   description: string;
   postDate: Date;
   city: OfferCity;
@@ -41,12 +41,12 @@ export type Offer = {
   isPremium: boolean;
   isFavorite: boolean;
   rating: number;
-  housing: OfferHousing;
-  rooms: number;
-  guests: number;
+  type: OfferType;
+  roomsNumber: number;
+  guestsNumber: number;
   price: number;
   options: OfferOption[];
-  author: User;
+  user: User;
   commentsNumber: number;
   location: Location;
 }
