@@ -1,6 +1,6 @@
 export enum UserRank {
-  regular = 'regular',
-  pro = 'pro'
+  Regular = 'regular',
+  Pro = 'pro'
 }
 
 export type User = {
