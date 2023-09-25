@@ -53,16 +53,16 @@
       "picture-10.jpg"
     ],
     "housingTypes": [
-      "apartment",
-      "house",
-      "room",
-      "hotel"
+      "Apartment",
+      "House",
+      "Room",
+      "Hotel"
     ],
     "options": [
       "Breakfast",
-      "Air conditioning",
-      "Laptop friendly workspace",
-      "Baby seat",
+      "AirConditioning",
+      "LaptopFriendlyWorkspace",
+      "BabySeat",
       "Washer",
       "Towels",
       "Fridge"
