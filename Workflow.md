@@ -91,3 +91,8 @@ npm run mock:server
 ### Остальное
 
 Все остальные файлы в проекте являются служебными. Пожалуйста, не удаляйте и не изменяйте их самовольно. Только если того требует задание или наставник.
+
+### Порядок действий по генерации данных
+npm run mock:server (Запустить JSON-server в отдельном терминале)
+npm run ts ./src/main.cli.ts -- --generate 100 ./mocks/test-data.tsv http://localhost:3123/api (Сгенерировать файл из 100 строк)
+npm run ts ./src/main.cli.ts -- --import ./mocks/test-data.tsv (Распарсить созданный файл)
