@@ -10,10 +10,10 @@ export enum OfferCity {
 }
 
 export enum OfferType {
-  apartment = 'apartment',
-  house = 'house',
-  room = 'room',
-  hotel = 'hotel'
+  Apartment = 'Apartment',
+  House = 'House',
+  Room = 'Room',
+  Hotel = 'Hotel'
 }
 
 export enum OfferOption {
@@ -42,11 +42,11 @@ export type Offer = {
   isFavorite: boolean;
   rating: number;
   type: OfferType;
-  roomsNumber: number;
-  guestsNumber: number;
+  roomsAmount: number;
+  guestsAmount: number;
   price: number;
   options: OfferOption[];
   user: User;
-  commentsNumber: number;
+  commentsAmount: number;
   location: Location;
 }
