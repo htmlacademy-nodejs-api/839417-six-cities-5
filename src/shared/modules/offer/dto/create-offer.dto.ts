@@ -1,4 +1,4 @@
-import { OfferCity, OfferOption, OfferLocation, OfferType } from '../../../types/index.js';
+import { OfferCity, OfferOption, OfferType } from '../../../types/index.js';
 
 export class CreateOfferDto {
   public title: string;
@@ -17,5 +17,5 @@ export class CreateOfferDto {
   public options: OfferOption[];
   public user: string;
   public commentsAmount: number;
-  public location: OfferLocation;
+  public coordinates: number[];
 }

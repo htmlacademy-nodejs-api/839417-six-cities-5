@@ -1,5 +1,5 @@
 import { defaultClasses, getModelForClass, modelOptions, prop, Ref } from '@typegoose/typegoose';
-import { OfferCity, OfferType, OfferOption, OfferLocation } from '../../types/index.js';
+import { OfferCity, OfferType, OfferOption } from '../../types/index.js';
 import { UserEntity } from '../user/index.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
@@ -28,7 +28,7 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({ required: true })
   public preview!: string;
 
-  @prop({ required: true, default: [] })
+  @prop({ required: true, type: () => [String], default: []})
   public pictures!: string[];
 
   @prop({ required: true })
@@ -61,8 +61,8 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({ required: true, default: 0 })
   public commentsAmount!: number;
 
-  @prop({ required: true, type: () => {} })
-  public location!: OfferLocation;
+  @prop({ required: true, type: () => [Number] })
+  public location!: number[];
 }
 
 export const OfferModel = getModelForClass(OfferEntity);

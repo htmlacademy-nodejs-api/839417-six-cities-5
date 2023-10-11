@@ -62,7 +62,7 @@ export class ImportCommand implements Command {
       options: offer.options,
       user: user.id,
       commentsAmount: offer.commentsAmount,
-      location: offer.location,
+      coordinates: offer.coordinates,
     });
   }
 
