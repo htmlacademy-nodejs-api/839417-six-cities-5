@@ -26,7 +26,7 @@ export enum OfferOption {
   Fridge = 'Fridge'
 }
 
-type Location = {
+export type OfferLocation = {
   latitude: number;
   longitude: number;
 }
@@ -48,5 +48,5 @@ export type Offer = {
   options: OfferOption[];
   user: User;
   commentsAmount: number;
-  location: Location;
+  location: OfferLocation;
 }
