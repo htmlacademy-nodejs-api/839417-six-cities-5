@@ -5,8 +5,8 @@ import { DatabaseClient } from './database-client.interface.js';
 import { Component } from '../../types/index.js';
 import { Logger } from '../logger/index.js';
 
-const RETRY_COUNT = 5;
-const RETRY_TIMEOUT = 1000;
+const RETRY_COUNT = 3;
+const RETRY_TIMEOUT = 5000;
 
 @injectable()
 export class MongoDatabaseClient implements DatabaseClient {
