@@ -96,3 +96,7 @@ npm run mock:server
 npm run mock:server (Запустить JSON-server в отдельном терминале)
 npm run ts ./src/main.cli.ts -- --generate 100 ./mocks/test-data.tsv http://localhost:3123/api (Сгенерировать файл из 100 строк)
 npm run ts ./src/main.cli.ts -- --import ./mocks/test-data.tsv (Распарсить созданный файл)
+
+### Импорт данных из мокового файла в БД (лекция 4)
+npm run ts src/main.cli.ts -- --import ./mocks/mock-data.tsv admin test 127.0.0.1 six-sities secret
+(Создает БД six-sities и в ней коллекции offers и users)
