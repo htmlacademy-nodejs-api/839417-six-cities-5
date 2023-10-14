@@ -49,11 +49,60 @@ paths:
       summary: Авторизация пользователя
       description: Авторизирует пользователя на основе логина и пароля
 
+      requestBody:
+        description: Информация для авторизации пользователя
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginUser'
+        required: true
+
+      responses:
+        "200":
+          description: Авторизация завершена успешно. Объект пользователя.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+        "400":
+          description: Неверный запрос.
+
+        "401":
+          description: Неверный пароль.
+
+        "404":
+          description: Пользователь с таким логином не существует.
+
     get:
       tags:
         - users
       summary: Проверка состояния пользователя
-      description: Возвращает информацию по авторизованному пользователю
+      description: Возвращает информацию по авторизованному пользователю.
+
+      responses:
+        "200":
+          description: Объект пользователя.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+        "401":
+          description: Доступ запрещен.
+
+  /users/logout:
+    post:
+      tags:
+        - users
+      summary: Логаут пользователя
+      description: Завершает сессию для пользователя
+
+      responses:
+        "204":
+          description: Логаут успешно выполнен
+        "404":
+          description: Выполнить логаут не удалось
 
   /users/{userId}/avatar:
     post:
