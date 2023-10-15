@@ -110,7 +110,7 @@ paths:
       tags:
         - offers
       summary: Список офферов
-      description: Возвращает список из 60 объектов offers отсортированных по дате публикации по убыванию.
+      description: Возвращает список из объектов offers отсортированных по дате публикации по убыванию.
       parameters:
         - in: query
           name: limit
