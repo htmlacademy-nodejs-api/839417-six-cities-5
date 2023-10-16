@@ -16,6 +16,6 @@ export class UpdateOfferDto {
   public price?: number;
   public options?: OfferOption[];
   public user?: string;
-  public commentsAmount?: number;
+  public commentCount?: number;
   public coordinates?: number[];
 }

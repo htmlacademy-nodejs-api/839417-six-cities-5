@@ -62,46 +62,19 @@ export class DefaultOfferService implements OfferService {
   public async updateAverageRating(offerId: string): Promise<DocumentType<OfferEntity> | null> {
     return this.offerModel
       .aggregate([
-        {
-          $match: {
-            $expr: {
-              $eq: [
-                '$_id',
-                {
-                  $toObjectId: offerId,
-                },
-              ],
-            },
-          },
-        },
+        {$match: {$expr: { $eq: ['$_id', {$toObjectId: offerId}] }}},
         {
           $lookup: {
             from: 'comments',
-            let: {
-              offerId: '$_id',
-            },
+            let: { offerId: '$_id' },
             pipeline: [
-              {
-                $match: {
-                  $expr: {
-                    $eq: ['$$offerId', '$offerId'],
-                  },
-                },
-              },
+              {$match: {$expr: { $eq: ['$$offerId', '$offerId'] }}},
             ],
             as: 'comments',
           },
         },
-        {
-          $set: {
-            rating: {
-              $avg: '$comments.rating',
-            },
-          },
-        },
-        {
-          $unset: 'comments',
-        },
+        {$set: {rating: { $avg: '$comments.rating' }}},
+        {$unset: 'comments'},
       ])
       .exec()
       .then(([result]) => result ?? null);
