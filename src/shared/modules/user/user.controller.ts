@@ -1,20 +1,47 @@
 import { inject, injectable } from 'inversify';
-import { Response } from 'express';
-import { BaseController, HttpMethod } from '../../libs/rest/index.js';
-import { Logger } from '../../libs/logger/index.js';
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import { UserService, CreateUserRequest } from './index.js';
 import { Component } from '../../types/index.js';
-import { CreateUserRequest } from './create-user-request.type.js';
+import { Logger } from '../../libs/logger/index.js';
+import { BaseController, HttpMethod } from '../../libs/rest/index.js';
+import { Config, RestSchema } from '../../libs/config/index.js';
+import { HttpError } from '../../libs/rest/errors/index.js';
+import { fillDTO } from '../../helpers/index.js';
+import { UserRdo } from './rdo/user.rdo.js';
 
 @injectable()
 export class UserController extends BaseController {
-  constructor(@inject(Component.Logger) protected readonly logger: Logger) {
+  constructor(
+    @inject(Component.Logger) protected readonly logger: Logger,
+    @inject(Component.UserService) protected readonly userService: UserService,
+    @inject(Component.Config) protected readonly configService: Config<RestSchema>,
+  ) {
     super(logger);
     this.logger.info('Register routes for UserController...');
 
     this.addRoute({ path: '/register', method: HttpMethod.Post, handler: this.create });
+    this.addRoute({ path: '/login', method: HttpMethod.Post, handler: this.login });
   }
 
-  public create(_req: CreateUserRequest, _res: Response): void {
-    throw new Error('[UserController] Oops');
+  public async create({body}: CreateUserRequest, res: Response): Promise<void> {
+    const isUserExists = await this.userService.findByEmail(body.email);
+
+    if (isUserExists) {
+      throw new HttpError(StatusCodes.CONFLICT, `User with email ${body.email} already exists`, 'UserController');
+    }
+
+    const result = await this.userService.create(body, this.configService.get('SALT'));
+    this.created(res, fillDTO(UserRdo, result));
+  }
+
+  public async login({body}: Request, _res: Response): Promise<void> {
+    const isUserExists = await this.userService.findByEmail(body.email);
+
+    if (!isUserExists) {
+      throw new HttpError(StatusCodes.UNAUTHORIZED, 'User was not found', 'UserController');
+    }
+
+    throw new HttpError(StatusCodes.NOT_IMPLEMENTED, 'Not implemented', 'UserController');
   }
 }

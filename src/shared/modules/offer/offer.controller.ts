@@ -8,24 +8,22 @@ import { OfferService } from './offer-service.interface.js';
 import { fillDTO } from '../../helpers/index.js';
 import { OfferRdo } from './rdo/offer.rdo.js';
 import { CreateOfferRequest } from './create-offer-request.js';
-import { UpdateOfferRequest } from './update-offer-request.js';
 import { HttpError } from '../../libs/rest/errors/index.js';
 
-
+@injectable()
 export class OfferController extends BaseController {
   constructor(
     @inject(Component.Logger) protected readonly logger: Logger,
     @inject(Component.OfferService) private readonly offerService: OfferService
   ) {
     super(logger);
-    this.logger.info('Registry loggers for OfferController...');
+    this.logger.info('Register loggers for OfferController...');
 
     this.addRoute({ path: '/', method: HttpMethod.Get, handler: this.index });
     this.addRoute({ path: '/', method: HttpMethod.Post, handler: this.create });
     this.addRoute({ path: '/:offerId', method: HttpMethod.Get, handler: this.getDetailed });
     this.addRoute({ path: '/:offerId', method: HttpMethod.Patch, handler: this.update });
-    this.addRoute({ path: '', method: HttpMethod.Delete, handler: this.delete });
-    this.addRoute({ path: '', method: HttpMethod., handler: });
+    this.addRoute({ path: '/:offerId', method: HttpMethod.Delete, handler: this.delete });
   }
 
   public async index(_req: Request, res: Response): Promise<void> {
@@ -53,5 +51,38 @@ export class OfferController extends BaseController {
     }
 
     this.ok(res, fillDTO(OfferRdo, offer));
+  }
+
+  public async update({params, body}: Request, res: Response): Promise<void> {
+    const {offerId} = params;
+
+    if (!offerId) {
+      throw new HttpError(StatusCodes.BAD_REQUEST, 'parameter offerId was not found in request', 'OfferController');
+    }
+
+    const updatedOffer = await this.offerService.updateById(offerId, body);
+
+    if (!updatedOffer) {
+      throw new HttpError(StatusCodes.NOT_FOUND, `Offer with id ${params.offerId} was not found`, 'OfferController');
+    }
+
+    this.ok(res, fillDTO(OfferRdo, updatedOffer));
+  }
+
+  public async delete({params}: Request, res: Response): Promise<void> {
+    const {offerId} = params;
+
+    if (!offerId) {
+      throw new HttpError(StatusCodes.BAD_REQUEST, 'Offer id must be defined', 'OfferController');
+    }
+
+    const offer = await this.offerService.exists(offerId);
+
+    if (!offer) {
+      throw new HttpError(StatusCodes.NOT_FOUND, `Offer with id ${offerId} does not exist`, 'OfferController');
+    }
+
+    await this.offerService.deleteById(offerId);
+    this.noContent(res, null);
   }
 }
