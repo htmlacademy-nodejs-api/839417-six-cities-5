@@ -25,9 +25,9 @@ export class UserController extends BaseController {
   }
 
   public async create({body}: CreateUserRequest, res: Response): Promise<void> {
-    const isUserExists = await this.userService.findByEmail(body.email);
+    const existsUser = await this.userService.findByEmail(body.email);
 
-    if (isUserExists) {
+    if (existsUser) {
       throw new HttpError(StatusCodes.CONFLICT, `User with email ${body.email} already exists`, 'UserController');
     }
 
@@ -36,9 +36,9 @@ export class UserController extends BaseController {
   }
 
   public async login({body}: Request, _res: Response): Promise<void> {
-    const isUserExists = await this.userService.findByEmail(body.email);
+    const existsUser = await this.userService.findByEmail(body.email);
 
-    if (!isUserExists) {
+    if (!existsUser) {
       throw new HttpError(StatusCodes.UNAUTHORIZED, 'User was not found', 'UserController');
     }
 

@@ -5,7 +5,7 @@ import { Config, RestSchema } from '../shared/libs/config/index.js';
 import { Component } from '../shared/types/index.js';
 import { DatabaseClient } from '../shared/libs/database-client/index.js';
 import { getMongoURI } from '../shared/helpers/index.js';
-import { Controller } from '../shared/libs/rest/index.js';
+import { Controller, ExceptionFilter } from '../shared/libs/rest/index.js';
 
 @injectable()
 export class RestApplication {
@@ -17,6 +17,7 @@ export class RestApplication {
     @inject(Component.DatabaseClient) private readonly databaseClient: DatabaseClient,
     @inject(Component.UserController) private readonly userController: Controller,
     @inject(Component.OfferController) private readonly offerController: Controller,
+    @inject(Component.ExceptionFilter) private readonly appExceptionFilter: ExceptionFilter,
   ) {
     this.server = express();
   }
@@ -43,8 +44,12 @@ export class RestApplication {
     this.server.use('/offers', this.offerController.router);
   }
 
-  public async _initMiddleware() {
+  private async _initMiddleware() {
     this.server.use(express.json());
+  }
+
+  private async _initExceptionFilters() {
+    this.server.use(this.appExceptionFilter.catch.bind(this.appExceptionFilter));
   }
 
   public async init() {
@@ -54,13 +59,17 @@ export class RestApplication {
     await this._initDb();
     this.logger.info('Init database completed');
 
+    this.logger.info('Init app-level middleware');
+    await this._initMiddleware();
+    this.logger.info('App-level middleware initialization completed');
+
     this.logger.info('Init controllers');
     await this._initControllers();
     this.logger.info('Controllers initialization completed');
 
-    this.logger.info('Init app-level middleware');
-    await this._initMiddleware();
-    this.logger.info('App-level middleware initialization completed');
+    this.logger.info('Init exception filters');
+    await this._initExceptionFilters();
+    this.logger.info('Exception filters initialization completed');
 
     this.logger.info('Try to init server...');
     await this._initServer();
