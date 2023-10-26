@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { BaseController, HttpMethod } from '../../libs/rest/index.js';
+import { BaseController, HttpMethod, ValidateObjectIdMiddleware } from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
 import { OfferService } from './offer-service.interface.js';
@@ -23,12 +23,40 @@ export class OfferController extends BaseController {
     super(logger);
     this.logger.info('Register loggers for OfferController...');
 
-    this.addRoute({ path: '/', method: HttpMethod.Get, handler: this.index });
-    this.addRoute({ path: '/', method: HttpMethod.Post, handler: this.create });
-    this.addRoute({ path: '/:offerId', method: HttpMethod.Get, handler: this.getDetailed });
-    this.addRoute({ path: '/:offerId', method: HttpMethod.Patch, handler: this.update });
-    this.addRoute({ path: '/:offerId', method: HttpMethod.Delete, handler: this.delete });
-    this.addRoute({ path: '/:offerId/comments', method: HttpMethod.Get, handler: this.getComments });
+    this.addRoute({
+      path: '/',
+      method: HttpMethod.Get,
+      handler: this.index
+    });
+    this.addRoute({
+      path: '/',
+      method: HttpMethod.Post,
+      handler: this.create
+    });
+    this.addRoute({
+      path: '/:offerId',
+      method: HttpMethod.Get,
+      handler: this.show,
+      middlewares: [new ValidateObjectIdMiddleware('offerId')]
+    });
+    this.addRoute({
+      path: '/:offerId',
+      method: HttpMethod.Delete,
+      handler: this.delete,
+      middlewares: [new ValidateObjectIdMiddleware('offerId')]
+    });
+    this.addRoute({
+      path: '/:offerId',
+      method: HttpMethod.Patch,
+      handler: this.update,
+      middlewares: [new ValidateObjectIdMiddleware('offerId')]
+    });
+    this.addRoute({
+      path: '/:offerId/comments',
+      method: HttpMethod.Get,
+      handler: this.getComments,
+      middlewares: [new ValidateObjectIdMiddleware('offerId')]
+    });
   }
 
   public async index(_req: Request, res: Response) {
@@ -42,7 +70,7 @@ export class OfferController extends BaseController {
     this.created(res, fillDTO(OfferRdo, offer));
   }
 
-  public async getDetailed({ params }: Request<ParamOfferId>, res: Response): Promise<void> {
+  public async show({ params }: Request<ParamOfferId>, res: Response): Promise<void> {
     const {offerId} = params;
     if (!offerId) {
       throw new HttpError(StatusCodes.BAD_REQUEST, `${params.offerId} is not a valid ID`, 'OfferController');
