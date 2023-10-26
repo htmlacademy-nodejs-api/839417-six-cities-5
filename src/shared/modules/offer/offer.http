@@ -58,3 +58,8 @@ Content-Type: application/json
 }
 
 ###
+
+## Получить список комментариев к офферу по id оффера
+GET http://localhost:4000/offers/6527a43c5668f50eeecb54fb/comments HTTP/1.1
+
+###
