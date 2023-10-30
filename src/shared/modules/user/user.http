@@ -8,7 +8,7 @@ Content-Type: application/json
   "name": "Harry Kane",
   "email": "kane@gmail.ru",
   "avatarPath": "striker.png",
-  "rank": "pro",
+  "rank": "Pro",
   "password": "hurricane"
 }
 
