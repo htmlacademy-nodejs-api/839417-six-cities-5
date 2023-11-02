@@ -1,4 +1,4 @@
-import { IsArray, IsDateString, IsEnum, IsInt, IsMongoId, Max, MaxLength, Min, MinLength,
+import { IsArray, IsDateString, IsEnum, IsInt, Max, MaxLength, Min, MinLength,
   ArrayMinSize, ArrayMaxSize, IsBoolean, IsNumber } from 'class-validator';
 import { OfferCity, OfferOption, OfferType } from '../../../types/index.js';
 import { CreateOfferValidationMessage } from './create-offer.messages.js';
