@@ -29,9 +29,6 @@ export class CreateOfferDto {
   @IsBoolean({ message: CreateOfferValidationMessage.isPremium.invalidFormat })
   public isPremium: boolean;
 
-  @IsBoolean({ message: CreateOfferValidationMessage.isFavorite.invalidFormat })
-  public isFavorite: boolean;
-
   @Min(1, {message: CreateOfferValidationMessage.rating.invalidValue})
   @Max(5, {message: CreateOfferValidationMessage.rating.invalidValue})
   public rating: number;
