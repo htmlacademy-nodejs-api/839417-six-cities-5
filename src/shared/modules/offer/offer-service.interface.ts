@@ -14,4 +14,6 @@ export interface OfferService extends DocumentExists {
   updateAverageRating(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   exists(documentId: string): Promise<boolean>;
+  addFavorite(offerId: string, userId: string): Promise<void>;
+  deleteFavorite(offerId: string, userId: string): Promise<void>;
 }
