@@ -108,7 +108,7 @@ paths:
         '201':
           description: Изображение успешно загружено
 
-  /users/{userId}/favorites:
+  /users/favorites:
     get:
       tags:
         - users
@@ -126,6 +126,32 @@ paths:
                   $ref: '#/components/schemas/offer'
         "401":
           description: Только для авторизованных пользователей
+
+    put:
+      tags:
+        - offers
+        - users
+      summary: Меняет статус предложения isFavorite.
+      description: Для авторизованных юзеров. Добавляет/удаляет `offerId` в поле user.favorites
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                offerId:
+                  type: string
+                  required: true
+                  example: 654866a5694c5cd34fa75155
+                isFavorite:
+                  type: boolean
+                  required: true
+                  example: true
+      responses:
+        "204":
+          description: Статус предложения "избранное" был успешно обновлен
+        "401":
+          description: Пользователь не авторизован для обновления списка избранных предложений.
 
   /offers:
     get:
@@ -326,6 +352,9 @@ components:
           type: string
           enum: [Regular, Pro]
           example: Pro
+        favorites:
+          type: array
+          example: ['65486492e7c4b9f412e5916e']
 
     createUser:
       type: object
@@ -490,7 +519,7 @@ components:
           type: string
           example: 6329c3d6a04ab1061c6425ea
         commentsAmount:
-          type: string
+          type: number
           example: 5
         coordinates:
           type: array
