@@ -10,7 +10,7 @@ import { fillDTO } from '../../helpers/index.js';
 import { OfferRdo } from './rdo/offer.rdo.js';
 import { CreateOfferRequest } from './create-offer-request.js';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
-import { CommentService, CommentRdo } from '../comment/index.js';
+import { CommentService } from '../comment/index.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
 
 @injectable()
@@ -67,15 +67,15 @@ export class OfferController extends BaseController {
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
       ]
     });
-    this.addRoute({
-      path: '/:offerId/comments',
-      method: HttpMethod.Get,
-      handler: this.getComments,
-      middlewares: [
-        new ValidateObjectIdMiddleware('offerId'),
-        new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
-      ]
-    });
+    // this.addRoute({
+    //   path: '/:offerId/comments',
+    //   method: HttpMethod.Get,
+    //   handler: this.getComments,
+    //   middlewares: [
+    //     new ValidateObjectIdMiddleware('offerId'),
+    //     new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
+    //   ]
+    // });
     this.addRoute({
       path: '/:offerId/favorites',
       method: HttpMethod.Post,
@@ -127,10 +127,10 @@ export class OfferController extends BaseController {
     this.noContent(res, offer);
   }
 
-  public async getComments({ params }: Request<ParamOfferId>, res: Response): Promise<void> {
-    const comments = await this.commentService.findByOfferId(params.offerId);
-    this.ok(res, fillDTO(CommentRdo, comments));
-  }
+  // public async getComments({ params }: Request<ParamOfferId>, res: Response): Promise<void> {
+  //   const comments = await this.commentService.findByOfferId(params.offerId);
+  //   this.ok(res, fillDTO(CommentRdo, comments));
+  // }
 
   public async addFavorite({ params: {offerId}, tokenPayload: {id: userId} }: Request<ParamOfferId>, res: Response): Promise<void> {
     await this.offerService.addFavorite(offerId, userId);
