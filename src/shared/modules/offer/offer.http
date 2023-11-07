@@ -53,14 +53,14 @@ Content-Type: application/json
 GET http://localhost:4000/offers/653cf0193b0a4a5bce75286b/comments HTTP/1.1
 ###
 
-## Добавить в избранное
-POST http://localhost:4000/offers/654871a654427e61077adebf/favorites HTTP/1.1
+## Добавить оффер в избранное
+POST http://localhost:4000/offers/654871a654427e61077adecc/favorites HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSGFycnkgS2FuZSIsImVtYWlsIjoia2FuZUBnbWFpbC5ydSIsImlkIjoiNjU0ODcxZDRlZjI2MTkzZWNkNWYyMGI0IiwiaWF0IjoxNjk5MjgzOTIyLCJleHAiOjE2OTk0NTY3MjJ9.eSXVOQQXc1IlHWXTyxkZgkdev7U03KEEg4vplLalwhM
 ###
 
-## Удалить из избранного
-DELETE http://localhost:4000/offers/654871a654427e61077adebf/favorites HTTP/1.1
+## Удалить оффер из избранного
+DELETE http://localhost:4000/offers/65490deadb6505a8650de361/favorites HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSGFycnkgS2FuZSIsImVtYWlsIjoia2FuZUBnbWFpbC5ydSIsImlkIjoiNjU0ODcxZDRlZjI2MTkzZWNkNWYyMGI0IiwiaWF0IjoxNjk5MjgzOTIyLCJleHAiOjE2OTk0NTY3MjJ9.eSXVOQQXc1IlHWXTyxkZgkdev7U03KEEg4vplLalwhM
 ###

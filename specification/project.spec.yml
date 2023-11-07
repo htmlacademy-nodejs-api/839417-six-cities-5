@@ -108,51 +108,6 @@ paths:
         '201':
           description: Изображение успешно загружено
 
-  /users/favorites:
-    get:
-      tags:
-        - users
-        - offers
-      summary: Список офферов, добавленных в избранное
-      description: Возвращает все офферы, добавленные юзером в избранное. Только для авторизованных пользователей.
-      responses:
-        "200":
-          description: Список избранных офферов
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/offer'
-        "401":
-          description: Только для авторизованных пользователей
-
-    put:
-      tags:
-        - offers
-        - users
-      summary: Меняет статус предложения isFavorite.
-      description: Для авторизованных юзеров. Добавляет/удаляет `offerId` в поле user.favorites
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              properties:
-                offerId:
-                  type: string
-                  required: true
-                  example: 654866a5694c5cd34fa75155
-                isFavorite:
-                  type: boolean
-                  required: true
-                  example: true
-      responses:
-        "204":
-          description: Статус предложения "избранное" был успешно обновлен
-        "401":
-          description: Пользователь не авторизован для обновления списка избранных предложений.
-
   /offers:
     get:
       tags:
@@ -256,6 +211,39 @@ paths:
           description: Пользователь может удалять только свои офферы
         "404":
           description: Оффер с переданным id не найден
+
+  /offers/{offerId}/favorites:
+    post:
+      tags:
+        - offers
+        - users
+      summary: Добавление оффера в число избранных.
+      description: Добавляет `offerId` в массив `user.favorites`. Только для авторизованных юзеров.
+      responses:
+        "204":
+          description: Оффер успешно добавлен
+        "400":
+          description: Невалидный offerId
+        "401":
+          description: Требуется авторизация
+        "404":
+          description: Оффер с указанным ID не найден
+
+    delete:
+      tags:
+        - offers
+        - users
+      summary: Удаление оффера из числа избранных.
+      description: Удаляет `offerId` из массива `user.favorites`. Только для авторизованных юзеров.
+      responses:
+        "204":
+          description: Оффер успешно удален
+        "400":
+          description: Невалидный offerId
+        "401":
+          description: Требуется авторизация
+        "404":
+          description: Оффер с указанным ID не найден
 
   /offers/{offerId}/comments:
     get:
