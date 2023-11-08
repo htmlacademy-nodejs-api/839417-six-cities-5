@@ -267,7 +267,7 @@ paths:
     get:
       tags:
         - comments
-      summary: Список комментариев
+      summary: Список комментариев к офферу
       description: Возвращает список из 50 (или меньше) последних комментариев оффера по заданному id оффера. Сортировка по убыванию по дате публикации.
       responses:
         "200":
@@ -301,7 +301,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/comment'
+                $ref: '#/components/schemas/createComment'
         "400":
           description: Неверный формат данных в теле запроса
           content:
@@ -533,6 +533,16 @@ components:
         userId:
           type: string
           example: 6329c3d6a04ab1061c6425ea
+
+    createComment:
+      type: object
+      properties:
+        text:
+          type: string
+          example:
+        rating:
+          type: integer
+          example: 5
 
     validationError:
       type: object
