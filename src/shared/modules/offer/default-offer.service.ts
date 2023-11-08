@@ -1,11 +1,12 @@
 import { inject, injectable } from 'inversify';
 import { DocumentType, types } from '@typegoose/typegoose';
 import { OfferService } from './offer-service.interface.js';
-import { Component } from '../../types/index.js';
+import { Component, SortType } from '../../types/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { OfferEntity } from './offer.entity.js';
 import { UpdateOfferDto, CreateOfferDto } from './index.js';
 import { UserEntity } from '../user/user.entity.js';
+import { DEFAULT_OFFER_AMOUNT, PREMIUM_OFFER_AMOUNT } from './offer.constant.js';
 
 @injectable()
 export class DefaultOfferService implements OfferService {
@@ -27,11 +28,11 @@ export class DefaultOfferService implements OfferService {
   }
 
   public async find(): Promise<DocumentType<OfferEntity>[]> {
-    return this.offerModel.find().populate('userId').exec();
+    return this.offerModel.find().limit(DEFAULT_OFFER_AMOUNT).populate('userId').exec();
   }
 
   public async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
-    return this.offerModel.findById(offerId).exec();
+    return this.offerModel.findById(offerId).populate('userId').exec();
   }
 
   public async findByCity(city: string): Promise<DocumentType<OfferEntity>[]> {
@@ -47,7 +48,12 @@ export class DefaultOfferService implements OfferService {
   }
 
   public async findPremium(city: string): Promise<DocumentType<OfferEntity>[]> {
-    return this.offerModel.find({ city }).populate('userId').exec();
+    return this.offerModel
+      .find({ city, isPremium: true })
+      .populate('userId')
+      .limit(PREMIUM_OFFER_AMOUNT)
+      .sort({ createdAt: SortType.Down })
+      .exec();
   }
 
   public async findFavorite(): Promise<DocumentType<OfferEntity>[]> {
@@ -55,10 +61,7 @@ export class DefaultOfferService implements OfferService {
   }
 
   public async incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null> {
-    return this.offerModel
-      .findByIdAndUpdate(offerId, {'$inc': {
-        commentCount: 1,
-      }}).exec();
+    return this.offerModel.findByIdAndUpdate(offerId, {'$inc': { commentCount: 1 }}).exec();
   }
 
   public async updateAverageRating(offerId: string): Promise<DocumentType<OfferEntity> | null> {

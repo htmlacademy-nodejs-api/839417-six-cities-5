@@ -5,8 +5,12 @@ Content-Type: application/json
 ###
 
 ## Получить детальную информацию об оффере по его id
-GET http://localhost:4000/offers/653cf0193b0a4a5bce75286b HTTP/1.1
+GET http://localhost:4000/offers/654871a654427e61077adeba HTTP/1.1
 Content-Type: application/json
+###
+
+## Получить список премиум офферов для заданного города. (не больше 3 штук)
+GET http://localhost:4000/offers/premium/Paris
 ###
 
 ## Создать новый оффер
@@ -15,15 +19,15 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSGFycnkgS2FuZSIsImVtYWlsIjoia2FuZUBnbWFpbC5ydSIsImlkIjoiNjU0ODcxZDRlZjI2MTkzZWNkNWYyMGI0IiwiaWF0IjoxNjk5MjgzOTIyLCJleHAiOjE2OTk0NTY3MjJ9.eSXVOQQXc1IlHWXTyxkZgkdev7U03KEEg4vplLalwhM
 
 {
-  "title": "Современная квартира",
+  "title": "more PREMIUM room in PARIS",
   "description": "Уютная и современная квартира с удобным расположением",
   "postDate": "2023-10-26T09:21:42.000Z",
-  "city": "Dusseldorf",
+  "city": "Paris",
   "preview": "modern-flat.jpg",
   "pictures": ["photo-1.jpg", "photo-2.jpg", "photo-3.jpg", "photo-4.jpg", "photo-5.jpg", "photo-6.jpg"],
-  "isPremium": false,
+  "isPremium": true,
   "isFavorite": true,
-  "rating": 5,
+  "rating": 2,
   "type": "Apartment",
   "roomsAmount": 2,
   "guestsAmount": 2,
@@ -35,12 +39,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSGFycnkgS2FuZSIsImVtYWlsI
 ###
 
 ## Удалить оффер по его id
-DELETE http://localhost:4000/offers/6527a43c5668f50eeecb5500 HTTP/1.1
+DELETE http://localhost:4000/offers/654a787a50e5b92599bb761f HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSGFycnkgS2FuZSIsImVtYWlsIjoia2FuZUBnbWFpbC5ydSIsImlkIjoiNjU0ODcxZDRlZjI2MTkzZWNkNWYyMGI0IiwiaWF0IjoxNjk5MjgzOTIyLCJleHAiOjE2OTk0NTY3MjJ9.eSXVOQQXc1IlHWXTyxkZgkdev7U03KEEg4vplLalwhM
 ###
 
 ## Обновить оффер
 PATCH http://localhost:4000/offers/653cf0193b0a4a5bce75286b HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSGFycnkgS2FuZSIsImVtYWlsIjoia2FuZUBnbWFpbC5ydSIsImlkIjoiNjU0ODcxZDRlZjI2MTkzZWNkNWYyMGI0IiwiaWF0IjoxNjk5MjgzOTIyLCJleHAiOjE2OTk0NTY3MjJ9.eSXVOQQXc1IlHWXTyxkZgkdev7U03KEEg4vplLalwhM
 
 {
   "title": "Обновленное название",
