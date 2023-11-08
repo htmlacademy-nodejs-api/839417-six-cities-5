@@ -16,31 +16,31 @@ GET http://localhost:4000/offers/premium/Paris
 ## Создать новый оффер
 POST http://localhost:4000/offers HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSGFycnkgS2FuZSIsImVtYWlsIjoia2FuZUBnbWFpbC5ydSIsImlkIjoiNjU0ODcxZDRlZjI2MTkzZWNkNWYyMGI0IiwiaWF0IjoxNjk5MjgzOTIyLCJleHAiOjE2OTk0NTY3MjJ9.eSXVOQQXc1IlHWXTyxkZgkdev7U03KEEg4vplLalwhM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiVGhvbWFzIE11bGxlciIsImVtYWlsIjoidGhvbWFzQGdtYWlsLnJ1IiwiaWQiOiI2NTRiMWJmNmNhNGQzOGE1ZTcxZDViMGQiLCJpYXQiOjE2OTk0MjE1MTgsImV4cCI6MTY5OTU5NDMxOH0.1NFnSjcfwTl44kqfeLsIm58uFkxCdswcK8Pde_QpAPk
 
 {
-  "title": "more PREMIUM room in PARIS",
-  "description": "Уютная и современная квартира с удобным расположением",
+  "title": "Оффер для комментариев от ТОМАСА",
+  "description": "Любое описание, просто текст",
   "postDate": "2023-10-26T09:21:42.000Z",
-  "city": "Paris",
+  "city": "Cologne",
   "preview": "modern-flat.jpg",
   "pictures": ["photo-1.jpg", "photo-2.jpg", "photo-3.jpg", "photo-4.jpg", "photo-5.jpg", "photo-6.jpg"],
-  "isPremium": true,
+  "isPremium": false,
   "isFavorite": true,
   "rating": 2,
   "type": "Apartment",
   "roomsAmount": 2,
   "guestsAmount": 2,
   "price": 2800,
-  "options": ["Washer", "Breakfast", "Fridge"],
+  "options": [],
   "commentCount": 0,
   "coordinates": [51.225402, 6.776314]
 }
 ###
 
 ## Удалить оффер по его id
-DELETE http://localhost:4000/offers/654a787a50e5b92599bb761f HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSGFycnkgS2FuZSIsImVtYWlsIjoia2FuZUBnbWFpbC5ydSIsImlkIjoiNjU0ODcxZDRlZjI2MTkzZWNkNWYyMGI0IiwiaWF0IjoxNjk5MjgzOTIyLCJleHAiOjE2OTk0NTY3MjJ9.eSXVOQQXc1IlHWXTyxkZgkdev7U03KEEg4vplLalwhM
+DELETE http://localhost:4000/offers/654b244c76cbf27214ea7de9 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiVGhvbWFzIE11bGxlciIsImVtYWlsIjoidGhvbWFzQGdtYWlsLnJ1IiwiaWQiOiI2NTRiMWJmNmNhNGQzOGE1ZTcxZDViMGQiLCJpYXQiOjE2OTk0MjM3MTEsImV4cCI6MTY5OTU5NjUxMX0.QSDp2KOb61YtC6ThvuzMwXDHo1b9V7TP51A_QVot9Kg
 ###
 
 ## Обновить оффер

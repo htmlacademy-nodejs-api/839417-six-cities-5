@@ -1,7 +1,8 @@
 import { inject, injectable } from 'inversify';
 import { Request, Response } from 'express';
 import { BaseController, HttpMethod, PrivateRouteMiddleware, ValidateObjectIdMiddleware,
-  ValidateDtoMiddleware, ValidateCityNameMiddleware, DocumentExistsMiddleware } from '../../libs/rest/index.js';
+  ValidateDtoMiddleware, ValidateCityNameMiddleware, DocumentExistsMiddleware,
+  UserAccessMiddleware } from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
 import { OfferService } from './offer-service.interface.js';
@@ -52,6 +53,7 @@ export class OfferController extends BaseController {
       handler: this.delete,
       middlewares: [
         new PrivateRouteMiddleware(),
+        new UserAccessMiddleware(this.offerService, 'offerId'),
         new ValidateObjectIdMiddleware('offerId'),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
       ]
@@ -62,6 +64,7 @@ export class OfferController extends BaseController {
       handler: this.update,
       middlewares: [
         new PrivateRouteMiddleware(),
+        new UserAccessMiddleware(this.offerService, 'offerId'),
         new ValidateObjectIdMiddleware('offerId'),
         new ValidateDtoMiddleware(UpdateOfferDto),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
