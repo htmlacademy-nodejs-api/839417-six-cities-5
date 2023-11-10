@@ -141,22 +141,22 @@ npm run cli -- --<command> [--arguments]
 npm run mock:server
 ```
 
-#### Сгенерировать файл из `number` строк
+#### Сгенерировать файл из 10 строк
 
 ```bash
-npm run ts ./src/main.cli.ts -- --generate `number` ./mocks/test-data.tsv http://localhost:3123/api
+npm run cli -- --generate 10 ./mocks/test-data.tsv http://localhost:3123/api
 ```
 
 #### Распарсить созданный файл
 
 ```bash
-npm run ts ./src/main.cli.ts -- --import ./mocks/test-data.tsv
+npm run cli -- --import ./mocks/test-data.tsv
 ```
 
 #### Импорт данных из мокового файла в БД
 
 ```bash
-npm run ts src/main.cli.ts -- --import ./mocks/mock-data.tsv admin test 127.0.0.1 six-cities secret
+npm run cli -- --import ./mocks/mock-data.tsv admin test 127.0.0.1 six-cities secret
 ```
 
 Создает БД с именем `six-cities`, с логином `admin` и паролем `test`. В БД создает коллекции `offers` и `users`
