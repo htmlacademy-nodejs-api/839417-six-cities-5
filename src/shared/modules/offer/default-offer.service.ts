@@ -35,6 +35,46 @@ export class DefaultOfferService implements OfferService {
     return this.offerModel.findById(offerId).populate('userId').exec();
   }
 
+  public async getDetailedOffer(offerId: string, userId?: string): Promise<DocumentType<OfferEntity> | null> {
+    let result = await this.offerModel.aggregate<DocumentType<OfferEntity>>([
+      { $match: { $expr: { $eq: [offerId, { $toString: '$_id'}] } } },
+      {
+        $lookup: {
+          from: 'users',
+          pipeline: [
+            { $match: { $expr: { $eq: [userId, { $toString: '$_id'}] } } },
+            { $project: {_id: false, favorites: true}}
+          ],
+          as: 'user'
+        }
+      },
+      { $unwind: { path: '$user', preserveNullAndEmptyArrays: true } },
+      {
+        $addFields: {
+          isFavorite: {
+            $cond:
+              [
+                {$and:
+                  [
+                    {$ne: [{ $type: '$user.favorites'}, 'missing']},
+                    {$in: ['$_id', '$user.favorites']}
+                  ]
+                },
+                true,
+                false
+              ]
+          },
+          id: { $toString: '$_id'}
+        }
+      },
+      { $unset: 'user' },
+    ]).exec();
+
+    result = await this.offerModel.populate(result, {path: 'userId'});
+    const offer = result[0];
+    return offer;
+  }
+
   public async findByCity(city: string): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel.find({ city }).populate('userId').exec();
   }

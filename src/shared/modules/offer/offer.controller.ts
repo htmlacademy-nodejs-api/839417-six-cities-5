@@ -111,9 +111,9 @@ export class OfferController extends BaseController {
     this.created(res, fillDTO(OfferRdo, offer));
   }
 
-  public async show({ params }: Request<ParamOfferId>, res: Response): Promise<void> {
-    const {offerId} = params;
-    const offer = await this.offerService.findById(offerId);
+  public async show({ params: {offerId}, tokenPayload }: Request<ParamOfferId>, res: Response): Promise<void> {
+    const userId = tokenPayload ? tokenPayload.id : undefined;
+    const offer = await this.offerService.getDetailedOffer(offerId, userId);
     this.ok(res, fillDTO(OfferRdo, offer));
   }
 
