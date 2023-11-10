@@ -11,7 +11,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSGFycnkgS2FuZSIsImVtYWlsI
 ###
 
 ## Получить список премиум офферов для заданного города. (не больше 3 штук)
-GET http://localhost:4000/offers/premium/Paris
+GET http://localhost:4000/offers/premium/paris
 ###
 
 ## Создать новый оффер
@@ -63,7 +63,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiVGhvbWFzIE11bGxlciIsImVtY
 ###
 
 ## Удалить оффер из избранного
-DELETE http://localhost:4000/offers/65490deadb6505a8650de361/favorites HTTP/1.1
+DELETE http://localhost:4000/offers/654871a654427e61077adeba/favorites HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSGFycnkgS2FuZSIsImVtYWlsIjoia2FuZUBnbWFpbC5ydSIsImlkIjoiNjU0ODcxZDRlZjI2MTkzZWNkNWYyMGI0IiwiaWF0IjoxNjk5MjgzOTIyLCJleHAiOjE2OTk0NTY3MjJ9.eSXVOQQXc1IlHWXTyxkZgkdev7U03KEEg4vplLalwhM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiVGhvbWFzIE11bGxlciIsImVtYWlsIjoidGhvbWFzQGdtYWlsLnJ1IiwiaWQiOiI2NTRiMWJmNmNhNGQzOGE1ZTcxZDViMGQiLCJpYXQiOjE2OTk2NDI3MjcsImV4cCI6MTY5OTgxNTUyN30.OjC3GrFSZQXzDyHqpC2lnkwXPLlHFl90R3GkYaGJFFo
+###
+
+## Получить список избранных офферов для юзера
+GET http://localhost:4000/offers/favorites
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiVGhvbWFzIE11bGxlciIsImVtYWlsIjoidGhvbWFzQGdtYWlsLnJ1IiwiaWQiOiI2NTRiMWJmNmNhNGQzOGE1ZTcxZDViMGQiLCJpYXQiOjE2OTk2NDI3MjcsImV4cCI6MTY5OTgxNTUyN30.OjC3GrFSZQXzDyHqpC2lnkwXPLlHFl90R3GkYaGJFFo
 ###

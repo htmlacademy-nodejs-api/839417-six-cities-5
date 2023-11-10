@@ -212,6 +212,25 @@ paths:
         "404":
           description: Оффер с переданным id не найден
 
+  /offers/favorites:
+    get:
+      tags:
+        - offers
+        - users
+      summary: Список избранных офферов.
+      description: Только для авторизованных юзеров. Список офферов, добавленных юзером в список избранное.
+      responses:
+        "200":
+          description: Список избранныех офферов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/offerPreview'
+        "401":
+          description: Требуется авторизация
+
   /offers/{offerId}/favorites:
     post:
       tags:
@@ -448,6 +467,43 @@ components:
             type: number
             format: float
           example: [52.370216, 4.895168]
+
+    offerPreview:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Modern studio
+        postDate:
+          type: string
+          format: date-time
+          example: 2023-09-21T17:41:15.000Z
+        city:
+          type: string
+          enum: [Amsterdam, Brussels, Cologne, Dusseldorf, Hamburg, Paris]
+          example: Hamburg
+        preview:
+          type: string
+          example: https://pictures/image.jpg
+        isPremium:
+          type: boolean
+          example: true
+        isFavorite:
+          type: boolean
+          example: false
+        rating:
+          type: number
+          example: 4
+        type:
+          type: string
+          enum: [Apartment, House, Room, Hotel]
+          example: House
+        price:
+          type: number
+          example: 1000
+        commentsAmount:
+          type: string
+          example: 5
 
     updateOffer:
       type: object

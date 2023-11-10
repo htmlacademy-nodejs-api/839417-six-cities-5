@@ -13,6 +13,7 @@ import { CreateOfferRequest } from './create-offer-request.js';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
 import { CommentService } from '../comment/index.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
+import { OfferPreviewRdo } from './rdo/offer-preview.rdo.js';
 
 @injectable()
 export class OfferController extends BaseController {
@@ -37,6 +38,12 @@ export class OfferController extends BaseController {
         new PrivateRouteMiddleware(),
         new ValidateDtoMiddleware(CreateOfferDto)
       ]
+    });
+    this.addRoute({
+      path: '/favorites',
+      method: HttpMethod.Get,
+      handler: this.findFavoritesByUserId,
+      middlewares: [new PrivateRouteMiddleware()]
     });
     this.addRoute({
       path: '/:offerId',
@@ -127,6 +134,11 @@ export class OfferController extends BaseController {
     const offer = await this.offerService.deleteById(offerId);
     await this.commentService.deleteByOfferId(offerId);
     this.noContent(res, offer);
+  }
+
+  public async findFavoritesByUserId({ tokenPayload: { id: userId } }: Request, res: Response): Promise<void> {
+    const offers = await this.offerService.findFavoritesByUserId(userId);
+    this.ok(res, fillDTO(OfferPreviewRdo, offers));
   }
 
   public async addFavorite({ params: {offerId}, tokenPayload: {id: userId} }: Request<ParamOfferId>, res: Response): Promise<void> {

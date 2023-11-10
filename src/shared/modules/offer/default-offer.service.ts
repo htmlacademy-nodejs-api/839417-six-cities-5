@@ -96,8 +96,36 @@ export class DefaultOfferService implements OfferService {
       .exec();
   }
 
-  public async findFavorite(): Promise<DocumentType<OfferEntity>[]> {
-    return this.offerModel.find().populate('userId').exec();
+  // TODO
+  public async findFavoritesByUserId(userId: string): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel.aggregate([
+      {
+        $lookup: {
+          from: 'users',
+          let: { userId: { $toObjectId: userId } },
+          pipeline: [
+            { $match: { $expr: { $eq: ['$_id', '$$userId'] } } },
+            { $project: { _id: 0, favorites: 1 } },
+          ],
+          as: 'users',
+        },
+      },
+      {
+        $addFields: {
+          user: { $arrayElemAt: ['$users', 0] },
+        },
+      },
+      {
+        $unset: ['users'],
+      },
+      {
+        $match: {
+          $expr: {
+            $in: ['$_id', '$user.favorites'],
+          },
+        },
+      },
+    ]).exec();
   }
 
   public async incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null> {
